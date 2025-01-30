@@ -1,0 +1,46 @@
+# Compiled binary files
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.a
+*.out
+
+# Go-specific ignores
+/go.sum
+/go.mod
+/go.work
+/go.work.sum
+*.test
+*.prof
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment & config files
+.env
+*.local
+*.secret
+
+# Logs & temp files
+logs/
+*.log
+*.cache
+*.tmp
+*.swp
+nohup.out
+
+# Dependency directories
+/vendor/
+bin/
+dist/
+build/
+node_modules/
+
+# Debug & profiling files
+pprof/
+
+# Docker files
+docker-compose.override.yml
