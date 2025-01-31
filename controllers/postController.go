@@ -34,6 +34,7 @@ func Posts (c *gin.Context) {
 }
 
 func GetPosts (c *gin.Context) {
+
 	// Get all posts
 	var posts []models.Post
 	result := initializers.DB.Find(&posts)
