@@ -1,0 +1,14 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+
+# Security Features
+xpack.security.enabled: true  # This enables security features
+xpack.security.enrollment.enabled: false # This disables the enrollment API
+
+# Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents
+xpack.security.http.ssl:
+  enabled: true
+
+# Enable encryption and mutual authentication between cluster nodes
+xpack.security.transport.ssl:
+  enabled: true

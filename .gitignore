@@ -38,6 +38,7 @@ bin/
 dist/
 build/
 node_modules/
+/elasticsearch
 
 # Debug & profiling files
 pprof/

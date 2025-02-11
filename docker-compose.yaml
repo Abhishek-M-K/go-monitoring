@@ -1,5 +1,6 @@
-version: "3.8"
-
+networks:
+  efk-nw:
+    name: efk-nw
 services:
   prom-server:
     image: prom/prometheus
@@ -10,7 +11,7 @@ services:
       - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
     env_file:
       - .env
-    
+
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -20,3 +21,44 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
     env_file:
       - .env
+
+  elasticsearch:
+    image: elasticsearch:8.8.0
+    expose:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+    networks:
+      - efk-nw
+
+  fluentd:
+    build: ./fluentd
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+    ports:
+      - 24224:24224
+      - 24224:24224/udp
+    volumes:
+      - ./fluentd/conf/fluent.conf:/fluentd/etc/fluent.conf
+    networks:
+      - efk-nw
+
+  kibana:
+    image: kibana:8.8.0
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    environment:
+      - TZ=Asia/Kolkata
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - efk-nw
